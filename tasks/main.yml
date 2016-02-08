@@ -8,3 +8,5 @@
     name: nginx
     enabled: yes
     state: started
+
+- include: site.yml

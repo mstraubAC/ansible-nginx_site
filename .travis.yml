@@ -53,4 +53,6 @@ script:
   | grep -q 'Welcome to nginx!'
   && (echo 'NGINX test: pass' && exit 0)
   || (echo 'NGINX test: fail' && exit 1)
+- "ls /etc/nginx/sites_available"
+- "cat /etc/nginx/sites_available/*"
 
