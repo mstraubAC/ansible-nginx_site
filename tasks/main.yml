@@ -1,6 +1,7 @@
 ---
 
-- include: {{ ansible_os_family }}_install.yml
+- include: Debian_install.yml
+  when: ansible_os_family == 'Debian'
 
 - name: Enable nginx
   service:
