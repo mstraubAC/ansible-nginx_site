@@ -1,0 +1,9 @@
+---
+
+- include: {{ ansible_os_family }}_install.yml
+
+- name: Enable nginx
+  service:
+    name: nginx
+    enabled: yes
+    state: started
