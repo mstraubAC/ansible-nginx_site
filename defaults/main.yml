@@ -9,9 +9,6 @@ nginx_site_root: /var/www/{{nginx_site_name}}
 nginx_site_index_extensions:
 - htm
 - html
-nginx_site_index_filenames:
-{% for extension in nginx_index_extensions %}
-- index.{{extension}}
-{% endfor %}
+nginx_site_index_filenames: !!null
 
 nginx_site_location_rules: {}
