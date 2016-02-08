@@ -24,4 +24,4 @@
   file:
     dest: '/etc/nginx/sites_enabled/50-{{ nginx_site_name }}.conf'
     state: absent
-  when: nginx_site_enabled
+  when: not nginx_site_enabled
