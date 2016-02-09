@@ -1,27 +1,27 @@
 ---
 
-- name: Ensure sites_enabled and sites_available exist
+- name: Ensure sites-enabled and sites_available exist
   file:
     name: '{{ item }}'
     state: directory
   with_items:
-  - '/etc/nginx/sites_available'
-  - '/etc/nginx/sites_enabled'
+  - '/etc/nginx/sites-available'
+  - '/etc/nginx/sites-enabled'
 
 - name: Install site
   template:
     src: site.conf
-    dest: '/etc/nginx/sites_available/{{ nginx_site_name }}.conf'
+    dest: '/etc/nginx/sites-available/{{ nginx_site_name }}.conf'
 
 - name: Enable site
   file:
-    src: '/etc/nginx/sites_available/{{ nginx_site_name }}.conf'
-    dest: '/etc/nginx/sites_enabled/50-{{ nginx_site_name }}.conf'
+    src: '/etc/nginx/sites-available/{{ nginx_site_name }}.conf'
+    dest: '/etc/nginx/sites-enabled/50-{{ nginx_site_name }}.conf'
     state: link
   when: nginx_site_enabled
 
 - name: Disable site
   file:
-    dest: '/etc/nginx/sites_enabled/50-{{ nginx_site_name }}.conf'
+    dest: '/etc/nginx/sites-enabled/50-{{ nginx_site_name }}.conf'
     state: absent
   when: not nginx_site_enabled
