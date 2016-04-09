@@ -12,6 +12,7 @@
   template:
     src: site.conf
     dest: '/etc/nginx/sites-available/{{ nginx_site_name }}.conf'
+  notify: reload nginx
 
 - name: Enable site
   file:
@@ -19,9 +20,11 @@
     dest: '/etc/nginx/sites-enabled/50-{{ nginx_site_name }}.conf'
     state: link
   when: nginx_site_enabled
+  notify: reload nginx
 
 - name: Disable site
   file:
     dest: '/etc/nginx/sites-enabled/50-{{ nginx_site_name }}.conf'
     state: absent
   when: not nginx_site_enabled
+  notify: reload nginx
