@@ -11,7 +11,7 @@
   - role: ansible-nginx_site
     server_name: test001
     nginx_site_location_rules:
-    - location: "~* \.(js|css|png|jpg|jpeg|gif|ico)$"
+    - location: "~* \\.(js|css|png|jpg|jpeg|gif|ico)$"
       rule: |
         expires max;
         log_not_found off;
