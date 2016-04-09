@@ -1,6 +1,6 @@
 ---
 
-nginx_site_name: ""
+nginx_site_name: {{nginx_site_hostname | default("default") }}
 nginx_site_enabled: yes
 nginx_site_default: no
 nginx_site_custom_config: !!null
