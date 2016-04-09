@@ -16,4 +16,7 @@
         log_not_found off;
       "robots.txt": |
         log_not_found off;
+  - role: ansible-nginx_site
+    nginx_site_hostname: test002
+    nginx_site_use_ssl: True
 

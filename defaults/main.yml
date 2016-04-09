@@ -1,12 +1,31 @@
 ---
+nginx_site_use_ssl: False
 
 nginx_site_name: '{{nginx_site_hostname | default("default") }}'
 nginx_site_enabled: yes
 nginx_site_default: no
 nginx_site_custom_config: !!null
-nginx_site_port: 80
+nginx_site_port: '{% if nginx_site_use_ssl %}443{% else %}80{% endif %}'
 nginx_site_hostname: !!null
 nginx_site_root: /var/www/{{nginx_site_name}}
+
+# SSL Defaults
+nginx_site_use_letsencrypt: False
+nginx_site_use_ssl: False
+nginx_site_ssl_certificate: '{% if nginx_site_use_letsencrypt %}/etc/letsencrypt/live/{{nginx_site_hostname}}/fullchain.pem{% else %}/etc/ssl/certs/{{nginx_site_hostname}}.pem{% endif %}'
+nginx_site_ssl_certificate_key: '{% if nginx_site_use_letsencrypt %}/etc/letsencrypt/live/{{nginx_site_hostname}}/privkey.pem{% else %}/etc/ssl/private/{{nginx_site_hostname}}.pem{% endif %}'
+nginx_site_ssl_protocols:
+- TLSv1
+- TLSv1.1
+- TLSv1.2
+nginx_site_ssl_ciphers:
+- EECDH+AESGCM
+- EDH+AESGCM
+- AES256+EECDH
+- AES256+EDH
+nginx_site_hsts: False
+nginx_site_hsts_max_age: 63072000
+nginx_site_hsts_include_subdomains: True
 
 nginx_site_index_extensions:
 - htm
