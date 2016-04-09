@@ -14,3 +14,4 @@ nginx_site_index_extensions:
 nginx_site_index_filenames: !!null
 
 nginx_site_location_rules: {}
+nginx_site_tuning: {}
