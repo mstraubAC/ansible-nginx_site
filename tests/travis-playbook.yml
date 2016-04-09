@@ -6,8 +6,8 @@
   - role: ansible-nginx_site
     server_name: localhost
     nginx_site_tuning:
-      client_max_body_size: 2m;
-      client_max_body_timout: 60s;
+      client_max_body_size: 2m
+      client_max_body_timout: 60s
   - role: ansible-nginx_site
     server_name: test001
     nginx_site_location_rules:
