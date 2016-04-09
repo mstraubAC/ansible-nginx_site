@@ -7,7 +7,7 @@
     nginx_site_hostname: localhost
     nginx_site_tuning:
       client_max_body_size: 2m
-      client_max_body_timout: 60s
+      client_body_timeout: 60s
   - role: ansible-nginx_site
     nginx_site_hostname: test001
     nginx_site_location_rules:
