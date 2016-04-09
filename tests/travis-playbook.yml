@@ -4,15 +4,16 @@
   remote_user: root
   roles:
   - role: ansible-nginx_site
-    server_name: localhost
+    nginx_site_hostname: localhost
     nginx_site_tuning:
       client_max_body_size: 2m
       client_max_body_timout: 60s
   - role: ansible-nginx_site
-    server_name: test001
+    nginx_site_hostname: test001
     nginx_site_location_rules:
-    - location: "~* \\.(js|css|png|jpg|jpeg|gif|ico)$"
-      rule: |
+      "~* \\.(js|css|png|jpg|jpeg|gif|ico)$": |
         expires max;
+        log_not_found off;
+      "robots.txt": |
         log_not_found off;
 
