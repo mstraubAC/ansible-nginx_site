@@ -15,6 +15,10 @@ nginx_acme_challenge_root: /srv/acme-challenge
 nginx_site_use_ssl: False
 nginx_site_ssl_certificate: '{% if nginx_site_use_letsencrypt %}/etc/letsencrypt/live/{{nginx_site_hostname}}/fullchain.pem{% else %}/etc/ssl/certs/{{nginx_site_hostname}}.pem{% endif %}'
 nginx_site_ssl_certificate_key: '{% if nginx_site_use_letsencrypt %}/etc/letsencrypt/live/{{nginx_site_hostname}}/privkey.pem{% else %}/etc/ssl/private/{{nginx_site_hostname}}.pem{% endif %}'
+
+# When this is false, http gets served too.
+nginx_site_http_redirect: True
+
 nginx_site_ssl_protocols:
 - TLSv1
 - TLSv1.1
