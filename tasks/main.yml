@@ -9,4 +9,7 @@
     enabled: yes
     state: started
 
+- include: letsencrypt.yml
+  when: nginx_site_use_ssl and nginx_site_use_letsencrypt
+
 - include: site.yml

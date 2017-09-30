@@ -1,6 +1,4 @@
 ---
-nginx_site_use_ssl: False
-
 nginx_site_name: '{{nginx_site_hostname | default("default") }}'
 nginx_site_enabled: yes
 nginx_site_default: no
@@ -8,6 +6,7 @@ nginx_site_custom_config: !!null
 nginx_site_port: '{% if nginx_site_use_ssl %}443{% else %}80{% endif %}'
 nginx_site_hostname: !!null
 nginx_site_root: /var/www/{{nginx_site_name}}
+nginx_site_enable_ipv6: yes
 
 # SSL Defaults
 nginx_site_use_letsencrypt: False
