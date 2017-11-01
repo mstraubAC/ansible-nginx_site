@@ -1,0 +1,70 @@
+---
+
+- name: Install certbot
+  apt:
+    name: 'certbot'
+    state: 'latest'
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure that the ACME-challenge directory exists
+  file:
+    path: '{{nginx_acme_challenge_root}}'
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Check state of certificate
+  stat:
+    path: '{{nginx_site_ssl_certificate}}'
+  register: stat_certificate_file
+
+- name: Install site for Letsencrypt
+  template:
+    src: site-letsencrypt.conf
+    dest: '/etc/nginx/sites-available/{{ nginx_site_name }}-letsencrypt.conf'
+  when: not stat_certificate_file.stat.exists
+
+- name: Enable site for Letsencrypt
+  file:
+    src: '/etc/nginx/sites-available/{{ nginx_site_name }}-letsencrypt.conf'
+    dest: '/etc/nginx/sites-enabled/50-{{ nginx_site_name }}.conf'
+    state: link
+  when: not stat_certificate_file.stat.exists
+
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
+  when: not stat_certificate_file.stat.exists
+
+- set_fact:
+    domain_list: '-d {{ nginx_site_hostname | join(" -d ") }}'
+  when: nginx_site_hostname is not string and nginx_site_hostname is sequence
+
+- set_fact:
+    domain_list: '-d {{nginx_site_hostname}}'
+  when: nginx_site_hostname is string
+
+- name: Run certbot
+  command: '/usr/bin/certbot -n certonly --webroot -w {{nginx_acme_challenge_root}} {{domain_list}}'
+  args:
+    creates: '{{nginx_site_ssl_certificate}}'
+
+- name: Delete link for Letsencrypt site
+  file:
+    path: '/etc/nginx/sites-enabled/50-{{ nginx_site_name }}.conf'
+    state: absent
+  when: not stat_certificate_file.stat.exists
+
+- name: Delete file for Letsencrypt site
+  file:
+    path: '/etc/nginx/sites-available/{{ nginx_site_name }}-letsencrypt.conf'
+    state: absent
+  when: not stat_certificate_file.stat.exists
+
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
+  when: not stat_certificate_file.stat.exists
