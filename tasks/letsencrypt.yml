@@ -47,7 +47,7 @@
   when: nginx_site_hostname is string
 
 - name: Run certbot
-  command: '/usr/bin/certbot -n certonly --webroot -w {{nginx_acme_challenge_root}} {{domain_list}}'
+  command: '/usr/bin/certbot -n certonly --agree-tos --email {{nginx_acme_email}} --webroot -w {{nginx_acme_challenge_root}} {{domain_list}}'
   args:
     creates: '{{nginx_site_ssl_certificate}}'
 
