@@ -13,3 +13,6 @@
   when: nginx_site_use_ssl and nginx_site_use_letsencrypt
 
 - include: site.yml
+
+- name: Uncomment server_names_bucket_size
+  lineinfile: dest=/etc/nginx/nginx.conf regexp="^(\s*)#\s*server_names_hash_bucket_size" line="\1server_names_hash_bucket_size 128;" backrefs=yes
