@@ -68,3 +68,11 @@
     name: nginx
     state: reloaded
   when: not stat_certificate_file.stat.exists
+
+- name: Enable nginx reload on certificate renewal
+  copy:
+      src: cron_certbot
+      dest: /etc/cron.d/certbot
+      owner: root
+      group: root
+      mode: u=rw,g=r,o=r
